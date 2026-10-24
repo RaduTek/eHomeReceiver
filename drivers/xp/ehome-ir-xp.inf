@@ -1,0 +1,38 @@
+; Windows XP install for the DIY eHome IR receiver (interface 2 of VID_1209&PID_0007).
+;
+; XP does not apply the MS OS compatible ID to functions of a composite device,
+; so this INF matches the interface directly and reuses the in-box irbus.inf
+; (XP SP3) for files, registry settings (IR decoders, power keys) and service.
+;
+; Install: Device Manager -> the unknown "eHome Infrared Transceiver" device ->
+; Update Driver -> Install from a specific location -> Have Disk -> this folder.
+; XP warns that the driver is not signed; choose "Continue Anyway".
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=USB
+ClassGUID={36FC9E60-C465-11CF-8056-444553540000}
+Provider=%Provider%
+DriverVer=10/24/2026,1.0.0.0
+
+[Manufacturer]
+%Provider%=Models
+
+[Models]
+%DeviceDesc%=EHomeIr_RX, USB\VID_1209&PID_0007&MI_02
+
+[EHomeIr_RX.NT]
+Include=irbus.inf
+Needs=IrBus_RX.NT
+
+[EHomeIr_RX.NT.HW]
+Include=irbus.inf
+Needs=IrBus_RX.NT.HW
+
+[EHomeIr_RX.NT.Services]
+Include=irbus.inf
+Needs=IrBus_RX.NT.Services
+
+[Strings]
+Provider="DIY"
+DeviceDesc="eHome Infrared Receiver (DIY)"
